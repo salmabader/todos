@@ -3,12 +3,15 @@ import Task from './Task'
 import { taskContext } from '../contexts/taskContext'
 
 function TaskList() {
-    const [isClicked, setIsClicked] = useState([true, false, false])
+    const [isClicked, setIsClicked] = useState([true, false, false, false])
     const { tasks } = useContext(taskContext)
     let filteredTask = [...tasks]
     const total = tasks.length
     const pending = tasks.filter((t) => {
-        return !t.isCompleted
+        return !t.isCompleted && !t.isStarted
+    }).length
+    const inProgress = tasks.filter((t) => {
+        return t.isStarted && !t.isCompleted
     }).length
     const done = tasks.filter((t) => {
         return t.isCompleted
@@ -26,8 +29,10 @@ function TaskList() {
     }
 
     if (isClicked[1]) {
-        filteredTask = tasks.filter((t) => !t.isCompleted)
+        filteredTask = tasks.filter((t) => !t.isCompleted && !t.isStarted)
     } else if (isClicked[2]) {
+        filteredTask = tasks.filter((t) => t.isStarted && !t.isCompleted)
+    } else if (isClicked[3]) {
         filteredTask = tasks.filter((t) => t.isCompleted)
     } else {
         filteredTask = [...tasks]
@@ -49,7 +54,11 @@ function TaskList() {
                         في الانتظار
                         <span className='px-1 bg-gray-300 text-xs mr-2 rounded-sm'>{pending}</span>
                     </button>
-                    <button onClick={() => { handleFilters(2) }} id="done" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center hover:bg-my-yellow ' + (isClicked[2] ? "bg-my-yellow" : "")} >
+                    <button onClick={() => { handleFilters(2) }} id="pending" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center border-l border-gray-300 hover:bg-my-yellow ' + (isClicked[2] ? "bg-my-yellow" : "")} >
+                        قيد الانجاز
+                        <span className='px-1 bg-gray-300 text-xs mr-2 rounded-sm'>{inProgress}</span>
+                    </button>
+                    <button onClick={() => { handleFilters(3) }} id="done" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center hover:bg-my-yellow ' + (isClicked[3] ? "bg-my-yellow" : "")} >
                         تم
                         <span className='px-1 bg-gray-300 text-xs mr-2 rounded-sm'>{done}</span>
                     </button>

@@ -6,6 +6,7 @@ import { taskContext } from '../contexts/taskContext';
 function Task(props) {
     const { tasks, setTasks } = useContext(taskContext)
     const [isChecked, setIsChecked] = useState(false)
+    const [isStarted, setIsStarted] = useState(false)
     function handleChange() {
         setIsChecked(!isChecked)
         const newVersion = tasks.map((t) => {
@@ -16,7 +17,20 @@ function Task(props) {
         }
         )
         setTasks(newVersion)
-
+    }
+    function handleStart() {
+        if (props.isStarted) {
+            setIsStarted(false)
+        } else {
+            setIsStarted(true)
+        }
+        const newVersion = tasks.map((t) => {
+            if (t.id == props.id) {
+                t.isStarted = !t.isStarted
+            }
+            return t
+        })
+        setTasks(newVersion)
     }
 
     return (
@@ -37,8 +51,9 @@ function Task(props) {
                 </div>
             </div>
             <div className='flex items-center'>
-                <button className={'text-blue-mid hover:bg-gray-200 text-lg rounded-full p-1 transition-all duration-100 ' + (!props.isStarted ? "-rotate-90 " : "") + (props.isCompleted ? "invisible" : "visible")}>
-                    {!props.isStarted ? <TbTriangleInvertedFilled /> : <TbPlayerPauseFilled />}
+                <button className={'text-blue-mid hover:bg-gray-200 text-lg rounded-full p-1 transition-all duration-100 ' + (!props.isStarted ? "-rotate-90 " : "") + (props.isStarted || props.isCompleted ? "invisible" : "visible")} onClick={handleStart}>
+                    <TbTriangleInvertedFilled />
+                    {/* {!props.isStarted ? <TbTriangleInvertedFilled /> : <TbPlayerPauseFilled />} */}
                 </button>
                 <button className='text-red-500 hover:bg-gray-200 text-lg rounded-full transition-all duration-100 p-1'>
                     <HiTrash />
