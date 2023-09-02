@@ -23,14 +23,17 @@ function TaskList() {
             }
         });
         setIsClicked(clicked);
-        if (index == 1) {
-            filteredTask = tasks.filter((t) => !t.isCompleted)
-        } else if (index == 2) {
-            filteredTask = tasks.filter((t) => t.isCompleted)
-        } else {
-            filteredTask = [...tasks]
-        }
     }
+    const pendingTasks = tasks.filter((t) => !t.isCompleted)
+    const doneTasks = tasks.filter((t) => t.isCompleted)
+    if (isClicked[1]) {
+        filteredTask = pendingTasks
+    } else if (isClicked[2]) {
+        filteredTask = doneTasks
+    } else {
+        filteredTask = [...tasks]
+    }
+
 
     const taskList = filteredTask.map((t) => {
         return <Task key={t.id} title={t.title} creationDate={t.addedOn} isStarted={t.isStarted} isCompleted={t.isCompleted} startTime={t.startTime} completedAt={t.completedAt} duration={t.duration} />
@@ -38,6 +41,7 @@ function TaskList() {
     return (
         <>
             <div className='border-b border-gray-400'>
+                {/*  */}
                 <div className='w-full flex justify-between items-center'>
                     <button onClick={() => { handleFilters(0) }} id="all" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center border-l border-gray-300 ' + (isClicked[0] ? "bg-my-yellow" : "")}>
                         الكل
@@ -56,7 +60,7 @@ function TaskList() {
 
             <div className='overflow-y-auto py-3 px-2'>
                 {/* list of tasks */}
-                {!taskList.length ? "لم تقم بإضافة أي مهمة إلى الآن" : taskList}
+                {!taskList.length ? "لا توجد مهمة إلى الآن" : taskList}
             </div>
         </>
     )
