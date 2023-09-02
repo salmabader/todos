@@ -12,6 +12,13 @@ function Task(props) {
         const newVersion = tasks.map((t) => {
             if (t.id == props.id) {
                 t.isCompleted = !t.isCompleted
+                const today = new Date();
+                const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                const preciseTime = date + ' ' + time;
+                t.completedAt = preciseTime
+                const duration = new Date(t.completedAt) - new Date(t.startTime);
+                t.duration = duration ? duration : 0
             }
             return t
         }
@@ -27,6 +34,11 @@ function Task(props) {
         const newVersion = tasks.map((t) => {
             if (t.id == props.id) {
                 t.isStarted = !t.isStarted
+                const today = new Date();
+                const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                const preciseTime = date + ' ' + time;
+                t.startTime = preciseTime
             }
             return t
         })
@@ -47,7 +59,7 @@ function Task(props) {
                         <span className={" absolute inline-flex h-full w-full rounded-full bg-zinc-100 opacity-75 " + (!props.isCompleted ? "animate-ping" : "")}></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-zinc-100"></span>
                     </span>
-                    <span className={"text-my-yellow " + (props.isCompleted && props.duration ? "visible" : "invisible")}>{props.duration} د</span>
+                    <span className={"text-my-yellow " + (props.isCompleted ? "visible" : "invisible")}>{props.duration / 1000 > 60 ? (props.duration / 1000 / 60).toFixed(1) + " د" : (props.duration / 1000) + " ث"}</span>
                 </div>
             </div>
             <div className='flex items-center'>

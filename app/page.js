@@ -6,7 +6,9 @@ import TaskList from './components/TaskList';
 import { taskContext } from './contexts/taskContext';
 
 export default function Home() {
-  const todaysDate = new Date().toLocaleDateString('ar-EG-u-nu-latn', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+  const today = new Date();
+  const todaysDate = today.toLocaleDateString('ar-EG-u-nu-latn', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+
 
   const [tasks, setTasks] = useState([])
 
