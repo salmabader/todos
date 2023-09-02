@@ -58,6 +58,11 @@ function Task(props) {
         setTasks(newVersion)
     }
 
+    function handleDelete() {
+        const newVersion = tasks.filter((t) => t.id != props.id)
+        setTasks(newVersion)
+    }
+
     return (
         <div className='animate__animated animate__zoomIn animate__faster w-full bg-blue-dark flex justify-between items-center mb-3 text-white p-2 rounded-md gap-5'>
             <div className='flex flex-col justify-center w-full'>
@@ -72,15 +77,14 @@ function Task(props) {
                         <span className={" absolute inline-flex h-full w-full rounded-full bg-zinc-100 opacity-75 " + (!props.isCompleted ? "animate-ping" : "")}></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-zinc-100"></span>
                     </span>
-                    <span className={"text-my-yellow " + (props.isCompleted ? "visible" : "invisible")}>{props.duration / 1000 > 60 ? (props.duration / 1000 / 60).toFixed(1) + " د" : (props.duration / 1000) + " ث"}</span>
+                    <span className={"text-my-yellow " + (props.isCompleted && props.isStarted ? "visible" : "invisible")}>{props.duration / 1000 > 60 ? (props.duration / 1000 / 60).toFixed(1) + " د" : (props.duration / 1000) + " ث"}</span>
                 </div>
             </div>
             <div className='flex items-center'>
-                <button className={'text-blue-mid hover:bg-gray-200 text-lg rounded-full p-1 transition-all duration-100 ' + (!props.isStarted ? "-rotate-90 " : "") + (props.isStarted || props.isCompleted ? "invisible" : "visible")} onClick={handleStart}>
-                    <TbTriangleInvertedFilled />
-                    {/* {!props.isStarted ? <TbTriangleInvertedFilled /> : <TbPlayerPauseFilled />} */}
+                <button className={'text-blue-mid hover:bg-gray-200 text-lg rounded-full p-1 transition-all duration-100 ' + (!props.isStarted ? "-rotate-90 " : "") + (props.isCompleted ? "invisible" : "visible")} onClick={handleStart}>
+                    {!props.isStarted ? <TbTriangleInvertedFilled /> : <TbPlayerPauseFilled />}
                 </button>
-                <button className='text-red-500 hover:bg-gray-200 text-lg rounded-full transition-all duration-100 p-1'>
+                <button onClick={handleDelete} className='text-red-500 hover:bg-gray-200 text-lg rounded-full transition-all duration-100 p-1'>
                     <HiTrash />
                 </button>
             </div>
