@@ -2,32 +2,30 @@ import React, { useContext, useEffect, useState } from 'react'
 import { HiTrash } from 'react-icons/hi';
 import { TbTriangleInvertedFilled, TbPlayerPauseFilled } from 'react-icons/tb';
 import { taskContext } from '../contexts/taskContext';
+let preciseTime = null
 
 function Task(props) {
     const { tasks, setTasks } = useContext(taskContext)
     const [isChecked, setIsChecked] = useState(false)
     const [isStarted, setIsStarted] = useState(false)
-    function handleChange() {
-        setIsChecked(!isChecked)
-        const newVersion = tasks.map((t) => {
-            if (t.id == props.id) {
-                t.isCompleted = !t.isCompleted
-                let preciseTime = null
-                useEffect(() => {
-                    const today = new Date()
-                    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-                    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-                    preciseTime = date + ' ' + time
-                }, [])
-                t.completedAt = preciseTime
-                const duration = new Date(t.completedAt) - new Date(t.startTime);
-                t.duration = duration ? duration : 0
-            }
-            return t
-        }
-        )
-        setTasks(newVersion)
-    }
+
+    useEffect(() => {
+        const today = new Date()
+        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+        preciseTime = date + ' ' + time
+        console.log("Checked: ", preciseTime)
+    }, [isChecked])
+
+
+    useEffect(() => {
+        const today = new Date()
+        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+        preciseTime = date + ' ' + time
+        console.log("Started: ", preciseTime)
+    }, [isStarted])
+
 
     function handleStart() {
         if (props.isStarted) {
@@ -38,17 +36,25 @@ function Task(props) {
         const newVersion = tasks.map((t) => {
             if (t.id == props.id) {
                 t.isStarted = !t.isStarted
-                let preciseTime = null
-                useEffect(() => {
-                    const today = new Date()
-                    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-                    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-                    preciseTime = date + ' ' + time
-                }, [])
                 t.startTime = preciseTime
             }
             return t
         })
+        setTasks(newVersion)
+    }
+
+    function handleChange() {
+        setIsChecked(!isChecked)
+        const newVersion = tasks.map((t) => {
+            if (t.id == props.id) {
+                t.isCompleted = !t.isCompleted
+                t.completedAt = preciseTime
+                const duration = new Date(t.completedAt) - new Date(t.startTime);
+                t.duration = duration ? duration : 0
+            }
+            return t
+        }
+        )
         setTasks(newVersion)
     }
 
