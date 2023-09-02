@@ -4,7 +4,7 @@ import { taskContext } from '../contexts/taskContext'
 
 function TaskList() {
     const [isClicked, setIsClicked] = useState([true, false, false])
-    const { tasks, setTasks } = useContext(taskContext)
+    const { tasks } = useContext(taskContext)
     let filteredTask = [...tasks]
     const total = tasks.length
     const pending = tasks.filter((t) => {
@@ -24,19 +24,17 @@ function TaskList() {
         });
         setIsClicked(clicked);
     }
-    const pendingTasks = tasks.filter((t) => !t.isCompleted)
-    const doneTasks = tasks.filter((t) => t.isCompleted)
+
     if (isClicked[1]) {
-        filteredTask = pendingTasks
+        filteredTask = tasks.filter((t) => !t.isCompleted)
     } else if (isClicked[2]) {
-        filteredTask = doneTasks
+        filteredTask = tasks.filter((t) => t.isCompleted)
     } else {
         filteredTask = [...tasks]
     }
 
-
     const taskList = filteredTask.map((t) => {
-        return <Task key={t.id} title={t.title} creationDate={t.addedOn} isStarted={t.isStarted} isCompleted={t.isCompleted} startTime={t.startTime} completedAt={t.completedAt} duration={t.duration} />
+        return <Task key={t.id} id={t.id} title={t.title} creationDate={t.addedOn} isStarted={t.isStarted} isCompleted={t.isCompleted} startTime={t.startTime} completedAt={t.completedAt} duration={t.duration} />
     })
     return (
         <>

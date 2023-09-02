@@ -4,17 +4,26 @@ import { TbTriangleInvertedFilled, TbPlayerPauseFilled } from 'react-icons/tb';
 import { taskContext } from '../contexts/taskContext';
 
 function Task(props) {
+    const { tasks, setTasks } = useContext(taskContext)
     const [isChecked, setIsChecked] = useState(false)
     function handleChange() {
-        setIsChecked(true)
+        setIsChecked(!isChecked)
+        const newVersion = tasks.map((t) => {
+            if (t.id == props.id) {
+                t.isCompleted = !t.isCompleted
+            }
+            return t
+        }
+        )
+        setTasks(newVersion)
+
     }
 
     return (
-        // animate__animated animate__bounceIn
         <div className='animate__animated animate__zoomIn animate__faster w-full bg-blue-dark flex justify-between items-center mb-3 text-white p-2 rounded-md gap-5'>
             <div className='flex flex-col justify-center w-full'>
                 <div className='flex gap-2'>
-                    <input className='w-5 h-5 rounded-full bg-blue-dark border-gray-200 hover:cursor-pointer outline-none checked:bg-blue-mid text-blue-mid ring-0 focus:ring-0 ' type="checkbox" name="" id="" onChange={handleChange} />
+                    <input className='w-5 h-5 rounded-full bg-blue-dark border-gray-200 hover:cursor-pointer outline-none checked:bg-blue-mid text-blue-mid ring-0 focus:ring-0 ' type="checkbox" checked={props.isCompleted} onChange={handleChange} />
                     <p className={'text-lg ' + (props.isCompleted ? "line-through" : "")}>{props.title}</p>
                 </div>
                 <div className='flex w-full items-center text-sm'>
