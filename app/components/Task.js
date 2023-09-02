@@ -25,6 +25,7 @@ function Task(props) {
         )
         setTasks(newVersion)
     }
+
     function handleStart() {
         if (props.isStarted) {
             setIsStarted(false)
