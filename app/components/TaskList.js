@@ -45,7 +45,7 @@ function TaskList() {
         <>
             <div className='border-b border-gray-400'>
                 {/*  */}
-                <div className='w-full flex justify-between items-center'>
+                <div className='w-full flex justify-between items-center md:text-base text-xs'>
                     <button onClick={() => { handleFilters(0) }} id="all" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center border-l border-gray-300 ' + (isClicked[0] ? "bg-my-yellow" : "")}>
                         الكل
                         <span className='px-1 bg-gray-300 text-xs mr-2 rounded-sm'>{total}</span>
