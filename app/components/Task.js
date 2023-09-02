@@ -77,7 +77,7 @@ function Task(props) {
                         <span className={" absolute inline-flex h-full w-full rounded-full bg-zinc-100 opacity-75 " + (!props.isCompleted ? "animate-ping" : "")}></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-zinc-100"></span>
                     </span>
-                    <span className={"text-my-yellow " + (props.isCompleted && props.isStarted ? "visible" : "invisible")}>{props.duration / 1000 > 60 ? (props.duration / 1000 / 60).toFixed(1) + " د" : (props.duration / 1000) + " ث"}</span>
+                    {/* <span className={"text-my-yellow " + (props.isCompleted && props.isStarted ? "visible" : "invisible")}>{props.duration / 1000 > 60 ? (props.duration / 1000 / 60).toFixed(1) + " د" : (props.duration / 1000) + " ث"}</span> */}
                 </div>
             </div>
             <div className='flex items-center'>
