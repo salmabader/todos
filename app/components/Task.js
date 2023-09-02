@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { HiTrash } from 'react-icons/hi';
 import { TbTriangleInvertedFilled, TbPlayerPauseFilled } from 'react-icons/tb';
 import { taskContext } from '../contexts/taskContext';
@@ -12,10 +12,13 @@ function Task(props) {
         const newVersion = tasks.map((t) => {
             if (t.id == props.id) {
                 t.isCompleted = !t.isCompleted
-                const today = new Date();
-                const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-                const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                const preciseTime = date + ' ' + time;
+                let preciseTime = null
+                useEffect(() => {
+                    const today = new Date()
+                    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+                    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                    preciseTime = date + ' ' + time
+                }, [])
                 t.completedAt = preciseTime
                 const duration = new Date(t.completedAt) - new Date(t.startTime);
                 t.duration = duration ? duration : 0
@@ -35,10 +38,13 @@ function Task(props) {
         const newVersion = tasks.map((t) => {
             if (t.id == props.id) {
                 t.isStarted = !t.isStarted
-                const today = new Date();
-                const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-                const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                const preciseTime = date + ' ' + time;
+                let preciseTime = null
+                useEffect(() => {
+                    const today = new Date()
+                    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+                    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                    preciseTime = date + ' ' + time
+                }, [])
                 t.startTime = preciseTime
             }
             return t
