@@ -2,30 +2,19 @@ import React, { useContext, useEffect, useState } from 'react'
 import { HiTrash } from 'react-icons/hi';
 import { TbTriangleInvertedFilled, TbPlayerPauseFilled } from 'react-icons/tb';
 import { taskContext } from '../contexts/taskContext';
-let preciseTime = null
+
+function getCurrentDateString() {
+    const today = new Date()
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+    return date + ' ' + time
+
+}
 
 function Task(props) {
     const { tasks, setTasks } = useContext(taskContext)
     const [isChecked, setIsChecked] = useState(false)
     const [isStarted, setIsStarted] = useState(false)
-
-    useEffect(() => {
-        const today = new Date()
-        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-        preciseTime = date + ' ' + time
-        console.log("Checked: ", preciseTime)
-    }, [isChecked])
-
-
-    useEffect(() => {
-        const today = new Date()
-        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-        preciseTime = date + ' ' + time
-        console.log("Started: ", preciseTime)
-    }, [isStarted])
-
 
     function handleStart() {
         if (props.isStarted) {
@@ -36,7 +25,7 @@ function Task(props) {
         const newVersion = tasks.map((t) => {
             if (t.id == props.id) {
                 t.isStarted = !t.isStarted
-                t.startTime = preciseTime
+                t.startTime = getCurrentDateString()
             }
             return t
         })
@@ -48,7 +37,7 @@ function Task(props) {
         const newVersion = tasks.map((t) => {
             if (t.id == props.id) {
                 t.isCompleted = !t.isCompleted
-                t.completedAt = preciseTime
+                t.completedAt = getCurrentDateString()
                 const duration = new Date(t.completedAt) - new Date(t.startTime);
                 t.duration = duration ? duration : 0
             }
@@ -77,7 +66,7 @@ function Task(props) {
                         <span className={" absolute inline-flex h-full w-full rounded-full bg-zinc-100 opacity-75 " + (!props.isCompleted ? "animate-ping" : "")}></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-zinc-100"></span>
                     </span>
-                    {/* <span className={"text-my-yellow " + (props.isCompleted && props.isStarted ? "visible" : "invisible")}>{props.duration / 1000 > 60 ? (props.duration / 1000 / 60).toFixed(1) + " د" : (props.duration / 1000) + " ث"}</span> */}
+                    <span className={"text-my-yellow " + (props.isCompleted && props.isStarted ? "visible" : "invisible")}>{props.duration / 1000 > 60 ? (props.duration / 1000 / 60).toFixed(1) + " د" : (props.duration / 1000) + " ث"}</span>
                 </div>
             </div>
             <div className='flex items-center'>
