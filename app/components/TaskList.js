@@ -39,18 +39,18 @@ function TaskList() {
     }
 
     const taskList = filteredTask.map((t) => {
-        return <Task key={t.id} id={t.id} title={t.title} creationDate={t.addedOn} isStarted={t.isStarted} isCompleted={t.isCompleted} startTime={t.startTime} completedAt={t.completedAt} duration={t.duration} />
+        return <Task key={t.id} id={t.id} title={t.title} creationDate={t.addedOn} isStarted={t.isStarted} isCompleted={t.isCompleted} startTime={t.startTime} completedAt={t.completedAt} />
     })
     return (
         <>
             <div className='border-b border-gray-400'>
                 {/*  */}
-                <div className='w-full flex justify-between items-center md:text-base text-xs'>
-                    <button onClick={() => { handleFilters(0) }} id="all" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center border-l border-gray-300 ' + (isClicked[0] ? "bg-my-yellow" : "")}>
+                <div className='w-full grid grid-cols-2 md:grid-cols-4 grid-rows-1 md:text-base text-xs'>
+                    <button onClick={() => { handleFilters(0) }} id="all" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center border-l border-gray-300 border-b md:border-b-0 ' + (isClicked[0] ? "bg-my-yellow" : "")}>
                         الكل
                         <span className='px-1 bg-gray-300 text-xs mr-2 rounded-sm'>{total}</span>
                     </button>
-                    <button onClick={() => { handleFilters(1) }} id="pending" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center border-l border-gray-300 hover:bg-my-yellow ' + (isClicked[1] ? "bg-my-yellow" : "")} >
+                    <button onClick={() => { handleFilters(1) }} id="pending" className={'flex-1 py-1 transition-all duration-100 flex justify-center items-center md:border-l border-gray-300 hover:bg-my-yellow border-b md:border-b-0 ' + (isClicked[1] ? "bg-my-yellow" : "")} >
                         في الانتظار
                         <span className='px-1 bg-gray-300 text-xs mr-2 rounded-sm'>{pending}</span>
                     </button>

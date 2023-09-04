@@ -29,7 +29,7 @@ function NewTask(props) {
     return (
         <form className='flex justify-between items-center gap-4'>
             <input value={newTask} onChange={(e) => { handleChange(e) }} className='flex-1 rounded-lg px-4 py-2 bg-blue-light placeholder:text-gray-500 outline-none border-0 focus:ring-0' type="text" placeholder='أريد أن أقوم بـ . . .' />
-            <button className='bg-blue-mid/20 py-2 px-4 rounded-lg font-medium hover:bg-blue-mid/70 transition-all duration-100' type="submit" onClick={(e) => { handleSubmit(e) }}>إضافة</button>
+            <button className='bg-blue-mid/20 py-2 px-4 rounded-lg font-medium hover:bg-blue-mid/70 transition-all duration-100 hidden sm:block' type="submit" onClick={(e) => { handleSubmit(e) }}>إضافة</button>
         </form>
     )
 }
