@@ -95,7 +95,7 @@ function Task(props) {
                     <input className='w-5 h-5 rounded-full bg-blue-dark border-gray-200 hover:cursor-pointer outline-none checked:bg-blue-mid text-blue-mid ring-0 focus:ring-0 ' type="checkbox" checked={props.isCompleted} onChange={handleCheck} />
                     {taskComponent}
                 </div>
-                <div className={'flex w-full items-center text-sm'}>
+                <div className={'flex w-full items-center md:text-sm xs:text-[10px] text-[5px]'}>
                     <span className={(props.startTime || props.completedAt ? "block" : "hidden")}>{props.startTime}</span>
                     <span className={"h-[0.5px] bg-zinc-100 flex-1 mx-2 " + (props.isCompleted && props.startTime ? "visible" : "invisible")}></span>
                     <span className={(props.isCompleted && props.startTime ? "block" : "hidden")}>{props.completedAt}</span>
